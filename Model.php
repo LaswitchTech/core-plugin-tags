@@ -1,50 +1,19 @@
 <?php
 
-/**
- * Core Framework - TagsModel
- *
- * @license    MIT (https://mit-license.org/)
- * @author     Louis Ouellet <louis@laswitchtech.com>
- */
-
 // Import additionnal class into the global namespace
-use \LaswitchTech\Core\Abstracts\Model;
+use \LaswitchTech\Core\Base\BaseModel;
 
-class TagsModel extends Model {
+class TagsModel extends BaseModel {
 
     /**
-     * Create a tag
-     *
-     * @param string $tag
-     * @return int
+     * Constructor
      */
-    public function create(string $tag): int
+    public function __construct()
     {
-        // Check if the tag is empty
-        if(empty($tag)){
-            return 0;
-        }
+        // Call the parent constructor
+        parent::__construct();
 
-        // Create a select Query
-        $Query = $this->Database->query()
-            ->table('tags')
-            ->select('id')
-            ->where('name', $tag);
-
-        // Retrieve the Results
-        $result = $Query->fetch();
-
-        // Check if the Tag already exists
-        if($result){
-            return $result[0]['id'];
-        }
-
-        // Create the Query
-        $Query = $this->Database->query()
-            ->table('tags')
-            ->insert(['name' => $tag]);
-
-        // Execute the Query
-        return $Query->execute();
+        // Initialize the Model
+        $this->init('tags');
     }
 }
